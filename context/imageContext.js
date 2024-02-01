@@ -1,12 +1,17 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const ImageContext = createContext();
 
 const ImageProvider = ({ children }) => {
   const [url, setUrl] = useState(null);
   const [id, setId] = useState(null);
+  const [datas, setDatas] = useState();
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    sessionStorage.setItem("datas", [datas]);
+  }, [datas]);
 
   const values = {
     url,
@@ -15,6 +20,8 @@ const ImageProvider = ({ children }) => {
     setLoading,
     id,
     setId,
+    setDatas,
+    datas,
   };
 
   return (

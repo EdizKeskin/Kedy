@@ -1,9 +1,10 @@
 "use client";
 import { useSettings } from "@/context/settingsContext";
 import React, { useState } from "react";
-import { SettingsIcon } from "./icons";
+import { RefreshIcon, SettingsIcon } from "./icons";
 import { useImage } from "@/context/imageContext";
 import { getImage } from "@/utils";
+import Title from "./Title";
 
 export default function SidebarItems() {
   const {
@@ -19,6 +20,10 @@ export default function SidebarItems() {
     setLightness,
     saturation,
     setSaturation,
+    fontSize,
+    setFontSize,
+    fontFamily,
+    setFontFamily,
   } = useSettings();
   const { id, setUrl, setLoading } = useImage();
   const [textSettings, setTextSettings] = useState(false);
@@ -33,14 +38,28 @@ export default function SidebarItems() {
       saturation: saturation,
       lightness: lightness,
       fontColor: fontColor,
+      fontSize: fontSize,
+      fontFamily: fontFamily,
     });
 
     setUrl(res);
     setLoading(false);
   };
-
+  const fonts = [
+    "Andale Mono",
+    "Impact",
+    "Arial",
+    "Arial Black",
+    "Comic Sans MS",
+    "Courier New",
+    "Georgia",
+    "Times New Roman",
+    "Verdana",
+    "Webdings",
+  ];
   return (
     <div className="flex flex-col gap-5">
+      <Title />
       <div className="flex flex-row items-end justify-end gap-3 ">
         <label className="w-full max-w-xs form-control">
           <div className="label">
@@ -71,10 +90,44 @@ export default function SidebarItems() {
               </div>
               <input
                 type="color"
-                className="w-full max-w-xs input "
+                className="w-full max-w-xs input input-sm"
                 value={fontColor || ""}
                 onChange={(e) => {
                   setFontColor(e.target.value);
+                }}
+              />
+            </label>
+            <label className="w-full max-w-xs form-control">
+              <div className="label">
+                <span className="label-text">Font</span>
+              </div>
+              <select
+                className="select select-bordered select-sm"
+                onChange={(e) => setFontFamily(e.target.value)}
+                defaultValue={"Impact"}
+              >
+                {fonts.map((font, i) => {
+                  return (
+                    <option key={i} value={font}>
+                      {font}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+
+            <label className="w-full max-w-xs form-control">
+              <div className="label">
+                <span className="label-text">Font Size</span>
+              </div>
+              <input
+                type="number"
+                placeholder="Type here"
+                className="w-full max-w-xs input input-bordered input-sm"
+                value={fontSize}
+                onChange={(e) => {
+                  setFontSize(e.target.value);
+                  console.log(fontSize);
                 }}
               />
             </label>
@@ -120,10 +173,10 @@ export default function SidebarItems() {
                 />
                 <span className="ml-2">{brightness}</span>
                 <button
-                  className="ml-2 btn btn-primary btn-xs"
+                  className="ml-2 btn btn-primary btn-xs btn-square"
                   onClick={() => setBrightness(1)}
                 >
-                  X
+                  <RefreshIcon />
                 </button>
               </div>
             </label>
@@ -144,10 +197,10 @@ export default function SidebarItems() {
                 />
                 <span className="ml-2">{lightness}</span>
                 <button
-                  className="ml-2 btn btn-primary btn-xs"
+                  className="ml-2 btn btn-primary btn-xs btn-square"
                   onClick={() => setLightness(1)}
                 >
-                  X
+                  <RefreshIcon />
                 </button>
               </div>
             </label>
@@ -155,7 +208,7 @@ export default function SidebarItems() {
               <div className="label">
                 <span className="label-text">Saturation</span>
               </div>
-              <div className="flex flex-row items-center justify-center">
+              <div className="flex flex-row items-center justify-center ">
                 <input
                   type="range"
                   min={0}
@@ -167,10 +220,10 @@ export default function SidebarItems() {
                 />
                 <span className="ml-2">{saturation}</span>
                 <button
-                  className="ml-2 btn btn-primary btn-xs"
+                  className="ml-2 btn btn-primary btn-xs btn-square"
                   onClick={() => setSaturation(1)}
                 >
-                  X
+                  <RefreshIcon />
                 </button>
               </div>
             </label>

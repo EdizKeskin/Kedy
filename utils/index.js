@@ -1,7 +1,14 @@
-export const getData = async () => {
-  const res = await fetch("https://cataas.com/cat?json=true", {
-    cache: "no-cache",
-  });
+export const getData = async (isGif) => {
+  const res = await fetch(
+    isGif
+      ? isGif === true
+        ? "https://cataas.com/cat/gif?json=true"
+        : "https://cataas.com/cat?json=true"
+      : "https://cataas.com/cat?json=true",
+    {
+      cache: "no-cache",
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -17,13 +24,15 @@ export const getImage = async ({
   saturation,
   lightness,
   fontColor,
+  fontSize,
+  fontFamily,
 }) => {
   const color = fontColor.replace("#", "");
 
   let url = `https://cataas.com/cat${id && `/${id}`}`;
 
   if (text !== undefined && text !== null && text !== "") {
-    url += `/says/${text}?fontColor=%23${color}`;
+    url += `/says/${text}?fontColor=%23${color}&fontSize=${fontSize}&font=${fontFamily}`;
   } else {
     url += `?`;
   }

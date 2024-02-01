@@ -10,6 +10,8 @@ const SettingsProvider = ({ children }) => {
   const [lightness, setLightness] = useState(1);
   const [saturation, setSaturation] = useState(1);
   const [fontColor, setFontColor] = useState("#ffffff");
+  const [fontSize, setFontSize] = useState(30);
+  const [fontFamily, setFontFamily] = useState("Impact");
 
   const values = {
     text,
@@ -24,6 +26,10 @@ const SettingsProvider = ({ children }) => {
     setSaturation,
     fontColor,
     setFontColor,
+    fontSize,
+    setFontSize,
+    fontFamily,
+    setFontFamily,
   };
 
   return (
